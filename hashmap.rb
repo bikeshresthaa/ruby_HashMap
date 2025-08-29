@@ -31,7 +31,7 @@ class HashMap
     else
       bucket.append(key, value)
       @size += 1
-      resize if size.to_f / @capacity >= @load_factor
+      resize if size.to_f / @capacity > @load_factor
     end
   end
 
@@ -86,6 +86,7 @@ class HashMap
     old_buckets = @buckets
     @capacity *= 2
     @buckets = Array.new(@capacity) { LinkedList.new }
+    @size = 0
 
     old_buckets.each do |bucket|
       bucket.each { |node| set(node.key, node.value) }
