@@ -30,11 +30,31 @@ class LinkedList
 
   def find(key)
     return nil if @head.nil?
-
     current = @head
-    while current
-      if current.key == key
-        return current.value
+    while current 
+      return current.value if current.key == key
+      current = current.next_node
+    end
+    nil
+  end
+
+  def contains?(key)
+    find(key) ? true : false
+  end
+
+  def remove(key)
+    return nil if @head.nil?
+    if @head.key == key
+      match = @head.value
+      @head = @head.next_node
+      return match
+    end
+    current = @head
+    while current && current.next_node
+      if current.next_node.key == key
+        match = current.next_node.value
+        current.next_node = current.next_node.next_node
+        return match
       end
       current = current.next_node
     end
