@@ -22,8 +22,7 @@ class HashMap
   end
 
   def set(key, value)
-    bucket_index = bucket_index(key)
-    bucket = @buckets[bucket_index]
+    bucket = get_bucket(key)
 
     if bucket.find(key)
       bucket.append(key, value)
@@ -34,7 +33,50 @@ class HashMap
     end
   end
 
-  
+  def get_bucket(key)
+    index = bucket_index(key)
+    @buckets[index]
+  end
+
+  def get(key)
+    bucket = get_bucket(key)
+    bucket.find(key)
+  end
+
+  def has?(key)
+    bucket = get_bucket(key)
+    bucket.contains?(key)
+  end
+
+  def remove(key)
+    bucket = get_bucket(key)
+    if bucket.has?(key)
+      @size -= 1
+      bucket.remove(key)
+    else
+      nil
+    end
+  end
+
+  def length
+    @size
+  end
+
+  def clear
+    @buckets = Array.new(@capacity) { LinkedList.new }
+  end
+
+  def keys
+    @buckets.flat_map { |bucket| bucket.keys}
+  end
+
+  def values
+    @buckets.flat_map { |bucket| bucket.values }
+  end
+
+  def entries
+    @buckets.flat_map { |bucket| bucket.entries }
+  end
 
   def resize
     old_buckets = @buckets

@@ -1,6 +1,7 @@
 require_relative 'node'
 
 class LinkedList
+  include Enumerable
   attr_accessor :head
 
   def initialize
@@ -59,5 +60,25 @@ class LinkedList
       current = current.next_node
     end
     nil
+  end
+
+  def each
+    current = @head
+    while current
+      yield(current)
+      current = current.next_node
+    end
+  end
+
+  def keys
+    map { |node| node.key }
+  end
+
+  def values
+    map { |node| node.value}
+  end
+
+  def entries
+    map { |node| [node.key, node.value]}
   end
 end
