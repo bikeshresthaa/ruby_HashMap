@@ -40,7 +40,7 @@ class LinkedList
   end
 
   def contains?(key)
-    find(key) ? true : false
+    !find(key).nil?
   end
 
   def remove(key)

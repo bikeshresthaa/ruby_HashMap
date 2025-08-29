@@ -1,3 +1,5 @@
+require_relative 'linked_list'
+
 class HashMap
   attr_accessor :capacity, :load_factor, :size, :buckets
 
@@ -28,7 +30,7 @@ class HashMap
       bucket.append(key, value)
     else
       bucket.append(key, value)
-      size += 1
+      @size += 1
       resize if size.to_f / @capacity >= @load_factor
     end
   end
@@ -50,7 +52,8 @@ class HashMap
 
   def remove(key)
     bucket = get_bucket(key)
-    if bucket.has?(key)
+    if self.has?(key)
+      bucket = get_bucket(key)
       @size -= 1
       bucket.remove(key)
     else
@@ -64,6 +67,7 @@ class HashMap
 
   def clear
     @buckets = Array.new(@capacity) { LinkedList.new }
+    @size = 0
   end
 
   def keys
